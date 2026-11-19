@@ -9,7 +9,6 @@ services:
       POSTGRES_DB: i9hub_saas
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U i9hub -d i9hub_saas"]
       interval: 10s
@@ -80,9 +79,6 @@ services:
     networks:
       - default
       - zilefnet
-    depends_on:
-      - i9hub-db
-      - i9hub-redis
     deploy:
       restart_policy:
         condition: on-failure
@@ -106,9 +102,6 @@ services:
       WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-5}
     networks:
       - default
-    depends_on:
-      - i9hub-db
-      - i9hub-redis
     deploy:
       restart_policy:
         condition: on-failure
