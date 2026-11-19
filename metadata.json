@@ -1,0 +1,6 @@
+{
+  "name": "i9Hub Admin — Central de Vendas, Licenças & Telemetria",
+  "description": "Painel administrativo do i9Hub para gestão automatizada de licenças, faturamento integrado, telemetria em tempo real da extensão, monitoramento de vendedores e qualidade.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
