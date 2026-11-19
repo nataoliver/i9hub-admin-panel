@@ -1,6 +1,4 @@
-﻿version: '3.8'
-
-# i9Hub SaaS + Admin Panel v1.1.0 - Stack Completa (Corrigida)
+version: '3.8'
 
 services:
   i9hub-db:
@@ -77,10 +75,8 @@ services:
       - zilefnet
     restart: unless-stopped
     depends_on:
-      i9hub-db:
-        condition: service_healthy
-      i9hub-redis:
-        condition: service_healthy
+      - i9hub-db
+      - i9hub-redis
 
   i9hub-worker:
     image: ghcr.io/nataoliver/i9hub-saas:latest
@@ -101,10 +97,8 @@ services:
       - default
     restart: unless-stopped
     depends_on:
-      i9hub-db:
-        condition: service_healthy
-      i9hub-redis:
-        condition: service_healthy
+      - i9hub-db
+      - i9hub-redis
 
   i9hub-admin:
     build:
