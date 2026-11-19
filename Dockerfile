@@ -13,7 +13,7 @@ COPY package.json package-lock.json* tsconfig.json* ./
 RUN npm install --legacy-peer-deps
 COPY server.ts ./
 COPY metadata.json ./
-RUN npx esbuild server.ts --bundle --platform=node --format=esm --outfile=server.mjs --external:express --external:dotenv --external:nodemailer --external:@google/genai
+RUN npx esbuild server.ts --bundle --platform=node --format=esm --outfile=server.mjs --packages=external
 
 # Production stage
 FROM node:20-alpine AS production
