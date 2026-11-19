@@ -1,8 +1,11 @@
-version: '3.8'
+﻿version: '3.8'
+
+# i9Hub SaaS + Admin Panel v1.1.0 - Stack Completa (Corrigida)
 
 services:
   i9hub-db:
     image: postgres:16-alpine
+    container_name: i9hub-db
     environment:
       POSTGRES_USER: i9hub
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -18,14 +21,11 @@ services:
       start_period: 30s
     networks:
       - default
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: unless-stopped
 
   i9hub-redis:
     image: redis:7-alpine
-    # BullMQ REQUIRES noeviction policy — do NOT use allkeys-lru or volatile-lru
+    container_name: i9hub-redis
     command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy noeviction
     volumes:
       - redisdata:/data
@@ -37,13 +37,11 @@ services:
       start_period: 10s
     networks:
       - default
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: unless-stopped
 
   i9hub-app:
     image: ghcr.io/nataoliver/i9hub-saas:latest
+    container_name: i9hub-app
     environment:
       NODE_ENV: production
       PORT: "3000"
@@ -51,13 +49,14 @@ services:
       REDIS_URL: redis://i9hub-redis:6379/0
       JWT_SECRET: ${JWT_SECRET}
       ENCRYPTION_MASTER_KEY: ${ENCRYPTION_MASTER_KEY}
-      WA_GATEWAY_URL: http://evolution-api:8080
-      WA_GATEWAY_API_KEY: ${WA_GATEWAY_API_KEY}
+      WA_GATEWAY_URL: ${WA_GATEWAY_URL:-}
+      WA_GATEWAY_API_KEY: ${WA_GATEWAY_API_KEY:-}
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       ASAAS_API_KEY: ${ASAAS_API_KEY:-}
       ASAAS_API_URL: ${ASAAS_API_URL:-https://api.asaas.com/v3}
       ASAAS_WEBHOOK_URL: ${ASAAS_WEBHOOK_URL:-https://app.i9ads.com.br/api/webhooks/asaas}
+      ASAAS_WEBHOOK_SECRET: ${ASAAS_WEBHOOK_SECRET:-}
       SUPERADMIN_PASSWORD: ${SUPERADMIN_PASSWORD}
     labels:
       - "traefik.enable=true"
@@ -68,7 +67,7 @@ services:
       - "traefik.http.routers.i9hub.tls.certresolver=letsencryptresolver"
       - "traefik.http.services.i9hub.loadbalancer.server.port=3000"
     healthcheck:
-      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/health', r => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\""]
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\""]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -76,13 +75,16 @@ services:
     networks:
       - default
       - zilefnet
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: unless-stopped
+    depends_on:
+      i9hub-db:
+        condition: service_healthy
+      i9hub-redis:
+        condition: service_healthy
 
   i9hub-worker:
     image: ghcr.io/nataoliver/i9hub-saas:latest
+    container_name: i9hub-worker
     command: ["node", "backend/src/worker.js"]
     environment:
       NODE_ENV: production
@@ -90,46 +92,40 @@ services:
       REDIS_URL: redis://i9hub-redis:6379/0
       JWT_SECRET: ${JWT_SECRET}
       ENCRYPTION_MASTER_KEY: ${ENCRYPTION_MASTER_KEY}
-      WA_GATEWAY_URL: http://evolution-api:8080
-      WA_GATEWAY_API_KEY: ${WA_GATEWAY_API_KEY}
+      WA_GATEWAY_URL: ${WA_GATEWAY_URL:-}
+      WA_GATEWAY_API_KEY: ${WA_GATEWAY_API_KEY:-}
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-5}
     networks:
       - default
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: unless-stopped
+    depends_on:
+      i9hub-db:
+        condition: service_healthy
+      i9hub-redis:
+        condition: service_healthy
 
-  # ═══════════════════════════════════════════════════════════
-  # PAINEL ADMINISTRATIVO v1.1.0 (NOVO)
-  # Build local ou imagem pré-construída via GHCR
-  # ═══════════════════════════════════════════════════════════
   i9hub-admin:
     build:
       context: .
       dockerfile: Dockerfile
-    # Para usar imagem pré-construída, comente 'build' acima e descomente abaixo:
-    # image: ghcr.io/nataoliver/i9hub-admin-panel:1.1.0
+    container_name: i9hub-admin-panel
     environment:
       NODE_ENV: production
       PORT: "3001"
-      # Asaas Produção
       ASAAS_API_KEY: ${ASAAS_API_KEY:-}
       ASAAS_ENV: ${ASAAS_ENV:-production}
       ASAAS_WEBHOOK_SECRET: ${ASAAS_WEBHOOK_SECRET:-}
-      # SMTP
       SMTP_HOST: ${SMTP_HOST:-smtp.stackmail.com}
       SMTP_PORT: ${SMTP_PORT:-587}
       SMTP_USER: ${SMTP_USER:-i9hub@i9mail.com.br}
       SMTP_PASS: ${SMTP_PASS:-}
       SMTP_FROM_NAME: ${SMTP_FROM_NAME:-i9Hub}
       SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-i9hub@i9mail.com.br}
-      # Segurança
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       JWT_SECRET: ${JWT_SECRET}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
-      # Banco (opcional — painel usa JSON por padrão)
       DATABASE_URL: ${DATABASE_URL:-}
     volumes:
       - admin_data:/app/data
@@ -150,13 +146,11 @@ services:
     networks:
       - default
       - zilefnet
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: unless-stopped
 
   uptime-kuma:
     image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
     volumes:
       - kuma_data:/app/data
     labels:
@@ -169,16 +163,13 @@ services:
       - "traefik.http.services.kuma.loadbalancer.server.port=3001"
     networks:
       - zilefnet
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    restart: unless-stopped
 
 volumes:
   pgdata:
   redisdata:
   kuma_data:
-  admin_data:  # Persistência do banco JSON do painel admin
+  admin_data:
 
 networks:
   zilefnet:
