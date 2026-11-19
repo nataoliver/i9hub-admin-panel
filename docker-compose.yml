@@ -1,0 +1,186 @@
+version: '3.8'
+
+services:
+  i9hub-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: i9hub
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: i9hub_saas
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U i9hub -d i9hub_saas"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - default
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  i9hub-redis:
+    image: redis:7-alpine
+    # BullMQ REQUIRES noeviction policy — do NOT use allkeys-lru or volatile-lru
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy noeviction
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    networks:
+      - default
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  i9hub-app:
+    image: ghcr.io/nataoliver/i9hub-saas:latest
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATABASE_URL: postgresql://i9hub:${POSTGRES_PASSWORD}@i9hub-db:5432/i9hub_saas
+      REDIS_URL: redis://i9hub-redis:6379/0
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_MASTER_KEY: ${ENCRYPTION_MASTER_KEY}
+      WA_GATEWAY_URL: http://evolution-api:8080
+      WA_GATEWAY_API_KEY: ${WA_GATEWAY_API_KEY}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ASAAS_API_KEY: ${ASAAS_API_KEY:-}
+      ASAAS_API_URL: ${ASAAS_API_URL:-https://api.asaas.com/v3}
+      ASAAS_WEBHOOK_URL: ${ASAAS_WEBHOOK_URL:-https://app.i9ads.com.br/api/webhooks/asaas}
+      SUPERADMIN_PASSWORD: ${SUPERADMIN_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=zilefnet"
+      - "traefik.http.routers.i9hub.rule=Host(`app.i9ads.com.br`)"
+      - "traefik.http.routers.i9hub.entrypoints=websecure"
+      - "traefik.http.routers.i9hub.tls=true"
+      - "traefik.http.routers.i9hub.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.i9hub.loadbalancer.server.port=3000"
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/health', r => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\""]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    networks:
+      - default
+      - zilefnet
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  i9hub-worker:
+    image: ghcr.io/nataoliver/i9hub-saas:latest
+    command: ["node", "backend/src/worker.js"]
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://i9hub:${POSTGRES_PASSWORD}@i9hub-db:5432/i9hub_saas
+      REDIS_URL: redis://i9hub-redis:6379/0
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_MASTER_KEY: ${ENCRYPTION_MASTER_KEY}
+      WA_GATEWAY_URL: http://evolution-api:8080
+      WA_GATEWAY_API_KEY: ${WA_GATEWAY_API_KEY}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-5}
+    networks:
+      - default
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  # ═══════════════════════════════════════════════════════════
+  # PAINEL ADMINISTRATIVO v1.1.0 (NOVO)
+  # Build local ou imagem pré-construída via GHCR
+  # ═══════════════════════════════════════════════════════════
+  i9hub-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Para usar imagem pré-construída, comente 'build' acima e descomente abaixo:
+    # image: ghcr.io/nataoliver/i9hub-admin-panel:1.1.0
+    environment:
+      NODE_ENV: production
+      PORT: "3001"
+      # Asaas Produção
+      ASAAS_API_KEY: ${ASAAS_API_KEY:-}
+      ASAAS_ENV: ${ASAAS_ENV:-production}
+      ASAAS_WEBHOOK_SECRET: ${ASAAS_WEBHOOK_SECRET:-}
+      # SMTP
+      SMTP_HOST: ${SMTP_HOST:-smtp.stackmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-i9hub@i9mail.com.br}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM_NAME: ${SMTP_FROM_NAME:-i9Hub}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-i9hub@i9mail.com.br}
+      # Segurança
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      # Banco (opcional — painel usa JSON por padrão)
+      DATABASE_URL: ${DATABASE_URL:-}
+    volumes:
+      - admin_data:/app/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=zilefnet"
+      - "traefik.http.routers.i9hub-admin.rule=Host(`rcs.i9ads.com.br`)"
+      - "traefik.http.routers.i9hub-admin.entrypoints=websecure"
+      - "traefik.http.routers.i9hub-admin.tls=true"
+      - "traefik.http.routers.i9hub-admin.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.i9hub-admin.loadbalancer.server.port=3001"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001/api/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - default
+      - zilefnet
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    volumes:
+      - kuma_data:/app/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=zilefnet"
+      - "traefik.http.routers.kuma.rule=Host(`status.i9ads.com.br`)"
+      - "traefik.http.routers.kuma.entrypoints=websecure"
+      - "traefik.http.routers.kuma.tls=true"
+      - "traefik.http.routers.kuma.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.kuma.loadbalancer.server.port=3001"
+    networks:
+      - zilefnet
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  pgdata:
+  redisdata:
+  kuma_data:
+  admin_data:  # Persistência do banco JSON do painel admin
+
+networks:
+  zilefnet:
+    external: true
+    name: zilefnet
