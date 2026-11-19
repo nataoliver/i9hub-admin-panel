@@ -1,4 +1,8 @@
-version: '3.8'
+version: "3.8"
+
+x-restart: &restart
+  condition: any
+  delay: 10s
 
 services:
   i9hub-db:
@@ -13,16 +17,12 @@ services:
       test: ["CMD-SHELL", "pg_isready -U i9hub -d i9hub_saas"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
       start_period: 30s
     networks:
       - default
     deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+      restart_policy: *restart
 
   i9hub-redis:
     image: redis:7-alpine
@@ -38,40 +38,28 @@ services:
     networks:
       - default
     deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+      restart_policy: *restart
 
   i9hub-app:
     image: ghcr.io/nataoliver/i9hub-saas:latest
     environment:
       NODE_ENV: production
       PORT: "3000"
-      DATABASE_URL: postgresql://i9hub:${POSTGRES_PASSWORD}@i9hub-db:5432/i9hub_saas
+      DATABASE_URL: "postgresql://i9hub:${POSTGRES_PASSWORD}@i9hub-db:5432/i9hub_saas"
       REDIS_URL: redis://i9hub-redis:6379/0
       JWT_SECRET: ${JWT_SECRET}
       ENCRYPTION_MASTER_KEY: ${ENCRYPTION_MASTER_KEY}
-      WA_GATEWAY_URL: ${WA_GATEWAY_URL:-}
-      WA_GATEWAY_API_KEY: ${WA_GATEWAY_API_KEY:-}
-      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
-      ASAAS_API_KEY: ${ASAAS_API_KEY:-}
-      ASAAS_API_URL: ${ASAAS_API_URL:-https://api.asaas.com/v3}
-      ASAAS_WEBHOOK_URL: ${ASAAS_WEBHOOK_URL:-https://app.i9ads.com.br/api/webhooks/asaas}
-      ASAAS_WEBHOOK_SECRET: ${ASAAS_WEBHOOK_SECRET:-}
+      WA_GATEWAY_URL: ""
+      WA_GATEWAY_API_KEY: ""
+      DEEPSEEK_API_KEY: ""
+      ANTHROPIC_API_KEY: ""
+      ASAAS_API_KEY: ""
+      ASAAS_API_URL: "https://api.asaas.com/v3"
+      ASAAS_WEBHOOK_URL: "https://app.i9ads.com.br/api/webhooks/asaas"
+      ASAAS_WEBHOOK_SECRET: ""
       SUPERADMIN_PASSWORD: ${SUPERADMIN_PASSWORD}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=zilefnet"
-      - "traefik.http.routers.i9hub.rule=Host(`app.i9ads.com.br`)"
-      - "traefik.http.routers.i9hub.entrypoints=websecure"
-      - "traefik.http.routers.i9hub.tls=true"
-      - "traefik.http.routers.i9hub.tls.certresolver=letsencryptresolver"
-      - "traefik.http.services.i9hub.loadbalancer.server.port=3000"
     healthcheck:
-      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\""]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -80,76 +68,72 @@ services:
       - default
       - zilefnet
     deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+      restart_policy: *restart
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=zilefnet"
+        - "traefik.http.routers.i9hub.rule=Host(`app.i9ads.com.br`)"
+        - "traefik.http.routers.i9hub.entrypoints=websecure"
+        - "traefik.http.routers.i9hub.tls=true"
+        - "traefik.http.routers.i9hub.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.i9hub.loadbalancer.server.port=3000"
 
   i9hub-admin:
     image: ghcr.io/nataoliver/i9hub-admin-panel:latest
     environment:
       NODE_ENV: production
       PORT: "3001"
-      ASAAS_API_KEY: ${ASAAS_API_KEY:-}
-      ASAAS_ENV: ${ASAAS_ENV:-production}
-      ASAAS_WEBHOOK_SECRET: ${ASAAS_WEBHOOK_SECRET:-}
-      SMTP_HOST: ${SMTP_HOST:-smtp.stackmail.com}
-      SMTP_PORT: ${SMTP_PORT:-587}
-      SMTP_USER: ${SMTP_USER:-i9hub@i9mail.com.br}
-      SMTP_PASS: ${SMTP_PASS:-}
-      SMTP_FROM_NAME: ${SMTP_FROM_NAME:-i9Hub}
-      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-i9hub@i9mail.com.br}
-      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      ASAAS_API_KEY: ""
+      ASAAS_ENV: "production"
+      ASAAS_WEBHOOK_SECRET: ""
+      SMTP_HOST: "smtp.stackmail.com"
+      SMTP_PORT: "587"
+      SMTP_USER: "i9hub@i9mail.com.br"
+      SMTP_PASS: ""
+      SMTP_FROM_NAME: "i9Hub"
+      SMTP_FROM_EMAIL: "i9hub@i9mail.com.br"
+      GEMINI_API_KEY: ""
       JWT_SECRET: ${JWT_SECRET}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
-      DATABASE_URL: ${DATABASE_URL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DATABASE_URL: "postgresql://i9hub:${POSTGRES_PASSWORD}@i9hub-db:5432/i9hub_saas"
     volumes:
       - admin_data:/app/data
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=zilefnet"
-      - "traefik.http.routers.i9hub-admin.rule=Host(`rcs.i9ads.com.br`)"
-      - "traefik.http.routers.i9hub-admin.entrypoints=websecure"
-      - "traefik.http.routers.i9hub-admin.tls=true"
-      - "traefik.http.routers.i9hub-admin.tls.certresolver=letsencryptresolver"
-      - "traefik.http.services.i9hub-admin.loadbalancer.server.port=3001"
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:3001/api/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 15s
+      start_period: 30s
     networks:
       - default
       - zilefnet
     deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+      restart_policy: *restart
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=zilefnet"
+        - "traefik.http.routers.i9hub-admin.rule=Host(`rcs.i9ads.com.br`)"
+        - "traefik.http.routers.i9hub-admin.entrypoints=websecure"
+        - "traefik.http.routers.i9hub-admin.tls=true"
+        - "traefik.http.routers.i9hub-admin.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.i9hub-admin.loadbalancer.server.port=3001"
 
   uptime-kuma:
     image: louislam/uptime-kuma:1
     volumes:
       - kuma_data:/app/data
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=zilefnet"
-      - "traefik.http.routers.kuma.rule=Host(`status.i9ads.com.br`)"
-      - "traefik.http.routers.kuma.entrypoints=websecure"
-      - "traefik.http.routers.kuma.tls=true"
-      - "traefik.http.routers.kuma.tls.certresolver=letsencryptresolver"
-      - "traefik.http.services.kuma.loadbalancer.server.port=3001"
     networks:
       - zilefnet
     deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+      restart_policy: *restart
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=zilefnet"
+        - "traefik.http.routers.kuma.rule=Host(`status.i9ads.com.br`)"
+        - "traefik.http.routers.kuma.entrypoints=websecure"
+        - "traefik.http.routers.kuma.tls=true"
+        - "traefik.http.routers.kuma.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.kuma.loadbalancer.server.port=3001"
 
 volumes:
   pgdata:

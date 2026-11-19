@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output (will be rebuilt in container)
+dist/
+
+# Environment variables (NEVER bake secrets into image)
+.env
+.env.local
+.env.*.local
+
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Git and GitHub
+.git/
+.github/
+
+# Docker files (not needed inside container)
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Documentation
+README.md
+LICENSE

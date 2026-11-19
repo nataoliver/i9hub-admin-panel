@@ -1,0 +1,575 @@
+{
+  "licenses": [
+    {
+      "id": "lic_101",
+      "key": "I9HUB-PRO-8492-7A1C",
+      "customerName": "Agência Nexo Marketing Digital",
+      "customerEmail": "contato@nexomarketing.com.br",
+      "customerPhone": "+55 11 99482-1209",
+      "companyName": "Nexo Comunicação Ltda",
+      "plan": "pro",
+      "status": "active",
+      "devices": [
+        {
+          "deviceId": "did_carlos_mbp_2026",
+          "deviceName": "Chrome Extension — MacBook Pro Carlos",
+          "extVersion": "5.4.0",
+          "activatedAt": "2026-10-13T18:47:30.179Z",
+          "lastSeen": "2026-10-20T18:47:30.179Z",
+          "ip": "177.136.24.12"
+        },
+        {
+          "deviceId": "did_test_123",
+          "deviceName": "Chrome Extension",
+          "extVersion": "5.4.1",
+          "activatedAt": "2026-10-20T18:47:40.215Z",
+          "lastSeen": "2026-10-20T18:47:40.215Z",
+          "ip": "127.0.0.1"
+        }
+      ],
+      "maxDevices": 3,
+      "entitlements": [
+        "dashboard.analytics",
+        "dashboard.awaiting_reply",
+        "dashboard.account_health",
+        "compliance.consent_tracking",
+        "crm.leads",
+        "crm.kanban",
+        "crm.custom_fields",
+        "crm.classification.auto",
+        "crm.deduplication",
+        "crm.export.csv",
+        "crm.export.webhook",
+        "whatsapp.chat_list",
+        "whatsapp.group_members",
+        "whatsapp.private_opportunities",
+        "whatsapp.campaigns.manage",
+        "whatsapp.campaigns.send",
+        "whatsapp.connection",
+        "maps.extraction",
+        "whatsapp.ai_support",
+        "whatsapp.ai_support.configure",
+        "whatsapp.ai_support.google_sheets",
+        "whatsapp.ai_support.human_handoff",
+        "telemetry.usage",
+        "telemetry.sales_funnel"
+      ],
+      "limits": {
+        "maxDailyLeads": 1000,
+        "maxDailyMessages": 3000,
+        "maxCampaigns": 50
+      },
+      "price": 297,
+      "billingCycle": "monthly",
+      "paymentStatus": "paid",
+      "createdAt": "2026-10-13T18:47:30.179Z",
+      "expiresAt": "2026-11-19T18:47:30.179Z",
+      "notes": "Plano Pro com suporte a automação de IA ativado e Google Sheets integrado.",
+      "assignedRepId": "rep_1",
+      "signedToken": "eyJraWQiOiJrMSIsImxpZCI6ImxpY18xMDEiLCJkaWQiOiJkaWRfdGVzdF8xMjMiLCJzdWIiOiJjb250YXRvQG5leG9tYXJrZXRpbmcuY29tLmJyIiwicGxhbiI6InBybyIsImVudCI6WyJkYXNoYm9hcmQuYW5hbHl0aWNzIiwiZGFzaGJvYXJkLmF3YWl0aW5nX3JlcGx5IiwiZGFzaGJvYXJkLmFjY291bnRfaGVhbHRoIiwiY29tcGxpYW5jZS5jb25zZW50X3RyYWNraW5nIiwiY3JtLmxlYWRzIiwiY3JtLmthbmJhbiIsImNybS5jdXN0b21fZmllbGRzIiwiY3JtLmNsYXNzaWZpY2F0aW9uLmF1dG8iLCJjcm0uZGVkdXBsaWNhdGlvbiIsImNybS5leHBvcnQuY3N2IiwiY3JtLmV4cG9ydC53ZWJob29rIiwid2hhdHNhcHAuY2hhdF9saXN0Iiwid2hhdHNhcHAuZ3JvdXBfbWVtYmVycyIsIndoYXRzYXBwLnByaXZhdGVfb3Bwb3J0dW5pdGllcyIsIndoYXRzYXBwLmNhbXBhaWducy5tYW5hZ2UiLCJ3aGF0c2FwcC5jYW1wYWlnbnMuc2VuZCIsIndoYXRzYXBwLmNvbm5lY3Rpb24iLCJtYXBzLmV4dHJhY3Rpb24iLCJ3aGF0c2FwcC5haV9zdXBwb3J0Iiwid2hhdHNhcHAuYWlfc3VwcG9ydC5jb25maWd1cmUiLCJ3aGF0c2FwcC5haV9zdXBwb3J0Lmdvb2dsZV9zaGVldHMiLCJ3aGF0c2FwcC5haV9zdXBwb3J0Lmh1bWFuX2hhbmRvZmYiLCJ0ZWxlbWV0cnkudXNhZ2UiLCJ0ZWxlbWV0cnkuc2FsZXNfZnVubmVsIl0sImxpbWl0cyI6eyJtYXhEYWlseUxlYWRzIjoxMDAwLCJtYXhEYWlseU1lc3NhZ2VzIjozMDAwLCJtYXhDYW1wYWlnbnMiOjUwfSwiaWF0IjoxNzkyNTIyMDYwLCJ2dSI6MTc5MjUyMjA2MCwiZXhwIjoxNzk1MTE0MDUwfQ.dcOnUnd7YVTDscO0EMKHXVXCqnc_w4U-w7ccw7zDqcOqw6soI8Omw4QbGcKZwrQ-Q8ODZjbCkMOrwqTCvVlxIUgRBhIUwrhswpLChMO3dAx2wpnDgXzCmnHCuRU"
+    },
+    {
+      "id": "lic_102",
+      "key": "I9HUB-BIZ-9912-3X5E",
+      "customerName": "Grupo Imobiliário Prime House",
+      "customerEmail": "diretoria@primehouse.com.br",
+      "customerPhone": "+55 11 98112-9988",
+      "companyName": "Prime House Empreendimentos",
+      "plan": "business",
+      "status": "active",
+      "devices": [
+        {
+          "deviceId": "did_beatriz_win11_401",
+          "deviceName": "Chrome Extension — Windows 11 Beatriz SDR",
+          "extVersion": "5.4.1",
+          "activatedAt": "2026-10-13T18:47:30.179Z",
+          "lastSeen": "2026-10-20T18:47:30.179Z",
+          "ip": "189.40.112.55"
+        }
+      ],
+      "maxDevices": 5,
+      "entitlements": [
+        "dashboard.analytics",
+        "dashboard.awaiting_reply",
+        "dashboard.account_health",
+        "compliance.consent_tracking",
+        "compliance.optout_management",
+        "compliance.policy_alerts",
+        "crm.leads",
+        "crm.kanban",
+        "crm.custom_fields",
+        "crm.classification.auto",
+        "crm.scoring_explainable",
+        "crm.deduplication",
+        "crm.export.csv",
+        "crm.export.webhook",
+        "crm.blacklist",
+        "whatsapp.chat_list",
+        "whatsapp.group_members",
+        "whatsapp.private_opportunities",
+        "whatsapp.campaigns.manage",
+        "whatsapp.campaigns.send",
+        "whatsapp.connection",
+        "maps.extraction",
+        "whatsapp.ai_support",
+        "whatsapp.ai_support.configure",
+        "whatsapp.ai_support.order_capture",
+        "whatsapp.ai_support.google_sheets",
+        "whatsapp.ai_support.human_handoff",
+        "telemetry.usage",
+        "telemetry.sales_funnel",
+        "marketing.tracking",
+        "notifications.in_app",
+        "ads.footer"
+      ],
+      "limits": {
+        "maxDailyLeads": 5000,
+        "maxDailyMessages": 10000,
+        "maxCampaigns": 150
+      },
+      "price": 697,
+      "billingCycle": "monthly",
+      "paymentStatus": "paid",
+      "createdAt": "2026-10-13T18:47:30.179Z",
+      "expiresAt": "2026-11-19T18:47:30.179Z",
+      "notes": "Equipe comercial de corretores com captura no Google Maps e automação de funil.",
+      "assignedRepId": "rep_2"
+    },
+    {
+      "id": "lic_103",
+      "key": "I9HUB-STR-4210-99PL",
+      "customerName": "Dra. Camila Toledo Odontologia",
+      "customerEmail": "consultorio@camilatoledo.odo.br",
+      "customerPhone": "+55 19 99742-0012",
+      "companyName": "Clínica Odonto Toledo",
+      "plan": "starter",
+      "status": "expired",
+      "devices": [
+        {
+          "deviceId": "did_camila_chrome_old",
+          "deviceName": "Chrome Extension — Dell Inspiron",
+          "extVersion": "5.3.3",
+          "activatedAt": "2026-09-01T10:00:00.000Z",
+          "lastSeen": "2026-10-05T14:22:00.000Z",
+          "ip": "201.88.42.10"
+        }
+      ],
+      "maxDevices": 1,
+      "entitlements": [
+        "dashboard.analytics",
+        "dashboard.awaiting_reply",
+        "crm.leads",
+        "crm.kanban",
+        "crm.custom_fields",
+        "crm.export.csv",
+        "whatsapp.chat_list",
+        "whatsapp.private_opportunities",
+        "maps.extraction",
+        "telemetry.usage"
+      ],
+      "limits": {
+        "maxDailyLeads": 300,
+        "maxDailyMessages": 500,
+        "maxCampaigns": 10
+      },
+      "price": 147,
+      "billingCycle": "monthly",
+      "paymentStatus": "overdue",
+      "createdAt": "2026-09-01T10:00:00.000Z",
+      "expiresAt": "2026-10-05T18:47:30.179Z",
+      "notes": "Assinatura vencida há 15 dias. Enviar proposta de renovação com desconto.",
+      "assignedRepId": "rep_3"
+    },
+    {
+      "id": "lic_104",
+      "key": "I9HUB-FRE-0012-TEST",
+      "customerName": "Lucas Ferreira (Trial WhatsApp)",
+      "customerEmail": "lucas.contabilidade@gmail.com",
+      "customerPhone": "+55 11 95472-1939",
+      "companyName": "LF Contabilidade",
+      "plan": "free",
+      "status": "revoked",
+      "devices": [],
+      "maxDevices": 1,
+      "entitlements": [
+        "dashboard.analytics",
+        "crm.leads",
+        "crm.kanban",
+        "whatsapp.chat_list",
+        "whatsapp.connection"
+      ],
+      "limits": {
+        "maxDailyLeads": 50,
+        "maxDailyMessages": 100,
+        "maxCampaigns": 2
+      },
+      "price": 0,
+      "billingCycle": "monthly",
+      "paymentStatus": "paid",
+      "createdAt": "2026-10-01T09:00:00.000Z",
+      "expiresAt": "2026-10-05T18:47:30.179Z",
+      "notes": "Trial expirado. Solicitou Pro mas não concluiu checkout.",
+      "assignedRepId": "rep_4"
+    },
+    {
+      "id": "lic_105",
+      "key": "I9HUB-PRO-6631-89FA",
+      "customerName": "Eduardo Martins Solar & Energia",
+      "customerEmail": "eduardo@solarmartins.com.br",
+      "customerPhone": "+55 31 99201-4455",
+      "companyName": "Martins Engenharia Solar",
+      "plan": "pro",
+      "status": "revoked",
+      "devices": [],
+      "maxDevices": 2,
+      "entitlements": [
+        "dashboard.analytics",
+        "dashboard.awaiting_reply",
+        "dashboard.account_health",
+        "compliance.consent_tracking",
+        "crm.leads",
+        "crm.kanban",
+        "crm.custom_fields",
+        "crm.classification.auto",
+        "crm.deduplication",
+        "crm.export.csv",
+        "crm.export.webhook",
+        "whatsapp.chat_list",
+        "whatsapp.group_members",
+        "whatsapp.private_opportunities",
+        "whatsapp.campaigns.manage",
+        "whatsapp.campaigns.send",
+        "whatsapp.connection",
+        "maps.extraction",
+        "whatsapp.ai_support",
+        "whatsapp.ai_support.configure",
+        "whatsapp.ai_support.google_sheets",
+        "whatsapp.ai_support.human_handoff",
+        "telemetry.usage",
+        "telemetry.sales_funnel"
+      ],
+      "limits": {
+        "maxDailyLeads": 1000,
+        "maxDailyMessages": 2000,
+        "maxCampaigns": 30
+      },
+      "price": 297,
+      "billingCycle": "monthly",
+      "paymentStatus": "overdue",
+      "createdAt": "2026-08-15T00:00:00.000Z",
+      "expiresAt": "2026-10-05T18:47:30.179Z",
+      "notes": "Cancelado a pedido do cliente por mudança de ramo.",
+      "assignedRepId": "rep_1"
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "sub_901",
+      "licenseId": "lic_101",
+      "customerName": "Agência Nexo Marketing Digital",
+      "customerEmail": "contato@nexomarketing.com.br",
+      "plan": "pro",
+      "amount": 297,
+      "billingCycle": "monthly",
+      "status": "active",
+      "paymentMethod": "pix",
+      "gateway": "mercadopago",
+      "nextBillingDate": "2026-11-19T18:47:30.179Z",
+      "createdAt": "2026-10-13T18:47:30.179Z",
+      "lastPaymentDate": "2026-10-13T18:47:30.179Z",
+      "pixCopiaECola": "00020126580014br.gov.bcb.pix0136e9hub-license-pix-key5204000053039865405297.005802BR5915i9Hub Tecnologia6009SAO PAULO62070503***6304E8A2"
+    },
+    {
+      "id": "sub_902",
+      "licenseId": "lic_102",
+      "customerName": "Grupo Imobiliário Prime House",
+      "customerEmail": "diretoria@primehouse.com.br",
+      "plan": "business",
+      "amount": 697,
+      "billingCycle": "monthly",
+      "status": "active",
+      "paymentMethod": "credit_card",
+      "gateway": "asaas",
+      "nextBillingDate": "2026-11-19T18:47:30.179Z",
+      "createdAt": "2026-10-13T18:47:30.179Z",
+      "lastPaymentDate": "2026-10-13T18:47:30.179Z"
+    },
+    {
+      "id": "sub_903",
+      "licenseId": "lic_103",
+      "customerName": "Dra. Camila Toledo Odontologia",
+      "customerEmail": "consultorio@camilatoledo.odo.br",
+      "plan": "starter",
+      "amount": 147,
+      "billingCycle": "monthly",
+      "status": "past_due",
+      "paymentMethod": "boleto",
+      "gateway": "asaas",
+      "nextBillingDate": "2026-10-05T18:47:30.179Z",
+      "createdAt": "2026-09-01T10:00:00.000Z",
+      "lastPaymentDate": "2026-09-01T10:00:00.000Z"
+    }
+  ],
+  "webhookLogs": [
+    {
+      "id": "wh_001",
+      "gateway": "mercadopago",
+      "event": "payment.approved",
+      "payload": {
+        "id": 19827361,
+        "status": "approved",
+        "transaction_amount": 297,
+        "payment_method_id": "pix",
+        "customer": "contato@nexomarketing.com.br"
+      },
+      "status": "processed",
+      "receivedAt": "2026-10-13T18:47:30.179Z",
+      "resultMessage": "Pagamento PIX confirmado. Licença I9HUB-PRO-8492-7A1C ativada com sucesso.",
+      "licenseIdAffected": "lic_101"
+    },
+    {
+      "id": "wh_002",
+      "gateway": "asaas",
+      "event": "PAYMENT_RECEIVED",
+      "payload": {
+        "event": "PAYMENT_RECEIVED",
+        "payment": {
+          "id": "pay_9921",
+          "value": 697,
+          "billingType": "CREDIT_CARD",
+          "customer": "diretoria@primehouse.com.br"
+        }
+      },
+      "status": "processed",
+      "receivedAt": "2026-10-13T18:47:30.179Z",
+      "resultMessage": "Cobrança Cartão de Crédito aprovada. Licença I9HUB-BIZ-9912-3X5E renovada.",
+      "licenseIdAffected": "lic_102"
+    }
+  ],
+  "telemetryEvents": [
+    {
+      "id": "evt_init_1",
+      "event": "crm.opportunity.opened",
+      "featureId": "telemetry.sales_funnel",
+      "timestamp": "2026-10-20T18:32:30.179Z",
+      "extVersion": "5.4.1",
+      "plan": "business",
+      "deviceId": "did_beatriz_win11_401",
+      "profile": {
+        "industry": "real_estate",
+        "role": "sdr",
+        "companySize": "10-50"
+      },
+      "metadata": {
+        "leadName": "Roberto Alencar Investimentos",
+        "value": 8500,
+        "stage": "Oportunidade Qualificada"
+      }
+    },
+    {
+      "id": "evt_init_2",
+      "event": "crm.stage.changed",
+      "featureId": "crm.kanban",
+      "timestamp": "2026-10-20T18:02:30.179Z",
+      "extVersion": "5.4.0",
+      "plan": "pro",
+      "deviceId": "did_carlos_mbp_2026",
+      "profile": {
+        "industry": "marketing",
+        "role": "closer",
+        "companySize": "2-5"
+      },
+      "metadata": {
+        "leadName": "TechSolutions Software",
+        "stageCategory": "won",
+        "stage": "Venda Fechada",
+        "value": 12400
+      }
+    },
+    {
+      "id": "evt_init_3",
+      "event": "crm.leads.saved",
+      "featureId": "maps.extraction",
+      "timestamp": "2026-10-20T17:17:30.179Z",
+      "extVersion": "5.4.1",
+      "plan": "business",
+      "deviceId": "did_beatriz_win11_401",
+      "metadata": {
+        "count": 48,
+        "source": "google_maps",
+        "niche": "Clínicas Médicas SP"
+      }
+    },
+    {
+      "id": "evt_init_4",
+      "event": "whatsapp.awaiting_reply.snapshot",
+      "featureId": "dashboard.awaiting_reply",
+      "timestamp": "2026-10-20T16:47:30.179Z",
+      "extVersion": "5.4.0",
+      "plan": "pro",
+      "deviceId": "did_carlos_mbp_2026",
+      "metadata": {
+        "pendingCount": 3,
+        "oldestPendingMinutes": 18
+      }
+    }
+  ],
+  "salesReps": [
+    {
+      "id": "rep_1",
+      "name": "Carlos Mendes",
+      "email": "carlos.mendes@i9leads.com.br",
+      "phone": "+55 11 98452-1100",
+      "role": "Closer Sênior",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "leadsCaptured": 1420,
+      "opportunitiesCreated": 384,
+      "proposalsSent": 165,
+      "dealsWon": 68,
+      "dealsLost": 24,
+      "conversionRate": 17.7,
+      "revenueGenerated": 148500,
+      "avgResponseTimeMin": 4.2,
+      "complianceScore": 98,
+      "lastActive": "2026-10-20T18:47:30.179Z",
+      "online": true,
+      "activeDeviceId": "did_carlos_mbp_2026"
+    },
+    {
+      "id": "rep_2",
+      "name": "Beatriz Vasconcelos",
+      "email": "beatriz.v@i9leads.com.br",
+      "phone": "+55 11 97230-4491",
+      "role": "SDR & Prospecção",
+      "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80",
+      "leadsCaptured": 2890,
+      "opportunitiesCreated": 512,
+      "proposalsSent": 198,
+      "dealsWon": 74,
+      "dealsLost": 31,
+      "conversionRate": 14.5,
+      "revenueGenerated": 162800,
+      "avgResponseTimeMin": 3.5,
+      "complianceScore": 95,
+      "lastActive": "2026-10-20T18:47:30.179Z",
+      "online": true,
+      "activeDeviceId": "did_beatriz_win11_401"
+    },
+    {
+      "id": "rep_3",
+      "name": "Rodrigo Silveira",
+      "email": "rodrigo.s@i9leads.com.br",
+      "phone": "+55 21 99182-3847",
+      "role": "Account Executive",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "leadsCaptured": 940,
+      "opportunitiesCreated": 245,
+      "proposalsSent": 110,
+      "dealsWon": 42,
+      "dealsLost": 19,
+      "conversionRate": 17.1,
+      "revenueGenerated": 94500,
+      "avgResponseTimeMin": 7.1,
+      "complianceScore": 89,
+      "lastActive": "2026-10-20T18:12:30.179Z",
+      "online": false,
+      "activeDeviceId": "did_rodrigo_dell_782"
+    },
+    {
+      "id": "rep_4",
+      "name": "Mariana Duarte",
+      "email": "mariana.duarte@i9leads.com.br",
+      "phone": "+55 31 98821-9902",
+      "role": "Inside Sales",
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+      "leadsCaptured": 1150,
+      "opportunitiesCreated": 310,
+      "proposalsSent": 135,
+      "dealsWon": 51,
+      "dealsLost": 22,
+      "conversionRate": 16.5,
+      "revenueGenerated": 112200,
+      "avgResponseTimeMin": 5,
+      "complianceScore": 94,
+      "lastActive": "2026-10-20T18:47:30.179Z",
+      "online": true,
+      "activeDeviceId": "did_mariana_mac_192"
+    }
+  ],
+  "extensionConfig": {
+    "notifications": [
+      {
+        "id": "notif_welcome",
+        "title": "Nova versão i9Hub v5.4.1 disponível!",
+        "text": "Melhorias de IA, extrator Google Maps otimizado e escudo anti-ban atualizado.",
+        "buttonLabel": "Ver Changelog",
+        "url": "https://i9hub.com.br/atualizacao-541",
+        "startsAt": "2026-10-19T18:47:30.179Z",
+        "endsAt": "2026-10-27T18:47:30.179Z",
+        "targetPlans": [
+          "free",
+          "starter",
+          "pro",
+          "business"
+        ],
+        "targetIndustries": []
+      }
+    ],
+    "footerAd": {
+      "id": "ad_pro_upgrade",
+      "active": true,
+      "title": "Desbloqueie o Piloto Automático de Vendas",
+      "text": "Faça upgrade para o plano Pro e tenha IA respondendo seus clientes no WhatsApp 24/7.",
+      "imageUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+      "buttonLabel": "Ativar Plano Pro",
+      "url": "https://wa.me/5511954721939?text=Ol%C3%A1%2C%20gostaria%20de%20ativar%20o%20Plano%20Pro%20do%20i9Hub",
+      "targetPlans": [
+        "free",
+        "starter"
+      ],
+      "targetIndustries": []
+    }
+  },
+  "planAsaasLinks": {
+    "pro_mensal": {
+      "linkId": "99bpo0h1wxfxxxxi",
+      "linkUrl": "https://www.asaas.com/000/c/99bpo0h1wxfxxxxi",
+      "chargeType": "RECURRENT",
+      "cycle": "MONTHLY",
+      "value": 19.9,
+      "planName": "Assinatura i9Hub Pro Mensal",
+      "createdAt": "2026-11-19T13:06:16.929Z"
+    },
+    "professional": {
+      "linkId": "a5nf2kca338litxk",
+      "linkUrl": "https://www.asaas.com/000/c/a5nf2kca338litxk",
+      "chargeType": "RECURRENT",
+      "cycle": "MONTHLY",
+      "value": 49.9,
+      "planName": "Assinatura i9Hub Professional",
+      "createdAt": "2026-11-19T13:06:16.931Z"
+    },
+    "pro_multitelas": {
+      "linkId": "kplzw2xcptndjf66",
+      "linkUrl": "https://www.asaas.com/000/c/kplzw2xcptndjf66",
+      "chargeType": "RECURRENT",
+      "cycle": "MONTHLY",
+      "value": 39.9,
+      "planName": "Assinatura i9Hub Pro Multitelas [R$39,90]",
+      "createdAt": "2026-11-19T13:06:16.931Z"
+    }
+  },
+  "smtpConfig": {
+    "host": "smtp.stackmail.com",
+    "port": 587,
+    "secure": false,
+    "requireTLS": true,
+    "auth": {
+      "user": "",
+      "pass": ""
+    },
+    "fromName": "i9Hub",
+    "fromEmail": "",
+    "subject": "Sua licença i9Hub"
+  }
+}
